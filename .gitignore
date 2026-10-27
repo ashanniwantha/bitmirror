@@ -1,0 +1,27 @@
+# Environment configuration files
+.env
+.env.*
+!.env.example
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Toolchain version managers
+.mise/
+mise.toml
+.tool-versions
+
+# IDEs and Editors
+.vscode/
+.cursor/
+*.suo
+
+# Go Build Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+BitMirror
+BitMirrors

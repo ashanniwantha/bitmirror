@@ -1,0 +1,37 @@
+services:
+  bitmirror-db:
+    image: timescale/timescaledb:latest-pg16
+    container_name: bitmirror-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: me_myself_I
+      TIMESCALEDB_TELEMETRY: "off" 
+    volumes:
+      - bitmirror_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d me_myself_I"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  bitmirror-cache:
+    image: redis:7-alpine
+    container_name: bitmirror-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - bitmirror_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  bitmirror_postgres_data:
+  bitmirror_redis_data:
